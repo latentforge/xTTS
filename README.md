@@ -149,6 +149,14 @@ You can also help us implement more models.
 ## Installation
 🐸TTS is tested on Ubuntu 18.04 with **python >= 3.9, < 3.12.**.
 
+Before using TTS, you need to install ffmpeg for torchcodec dependency.
+
+```bash
+# Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install ffmpeg libavcodec-dev libavformat-dev libavutil-dev
+```
+
 If you are only interested in [synthesizing speech](https://tts.readthedocs.io/en/latest/inference.html) with the released 🐸TTS models, installing from PyPI is the easiest option.
 
 ```bash
