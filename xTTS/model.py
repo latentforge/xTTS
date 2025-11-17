@@ -1,15 +1,50 @@
 from abc import abstractmethod
+from typing import Any, Tuple
 from typing import Dict
 
 import torch
+from torch import nn
 from coqpit import Coqpit
 try:
     from trainer import TrainerModel
 except ImportError:
     import sys
     print("Warning: trainer package not found. Using a dummy TrainerModel class.", file=sys.stderr)
-    class TrainerModel:
-        pass
+    class TrainerModel(nn.Module):
+        def format_batch(self, batch: Dict) -> Dict:
+            pass
+
+        def format_batch_on_device(self, batch: Dict) -> Dict:
+            pass
+
+        def train_step(self, *args: Any, **kwargs: Any) -> Tuple[Dict, Dict]:
+            pass
+
+        def train_log(self, *args: Any, **kwargs: Any) -> None:
+            pass
+
+        @torch.no_grad()
+        def eval_step(self, *args: Any, **kwargs: Any):
+            pass
+
+        def eval_log(self, *args: Any, **kwargs: Any) -> None:
+            pass
+
+        @abstractmethod
+        def get_data_loader(*args: Any, **kwargs: Any) -> torch.utils.data.DataLoader:
+            pass
+
+        def init_for_training(self) -> None:
+            pass
+
+        def optimize(self, *args: Any, **kwargs: Any) -> Tuple[Dict, Dict, float]:
+            pass
+
+        def scaled_backward(
+            self, loss: torch.Tensor, trainer: "Trainer", optimizer: "Optimizer", *args: Any, **kwargs: Any
+        ) -> Tuple[float, bool]:
+            pass
+
 
 # pylint: skip-file
 
