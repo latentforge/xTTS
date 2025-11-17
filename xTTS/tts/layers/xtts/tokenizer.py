@@ -3,10 +3,7 @@ import re
 import textwrap
 from functools import cached_property
 
-import pypinyin
 import torch
-from hangul_romanize import Transliter
-from hangul_romanize.rule import academic
 from num2words import num2words
 from spacy.lang.ar import Arabic
 from spacy.lang.en import English
@@ -14,8 +11,6 @@ from spacy.lang.es import Spanish
 from spacy.lang.ja import Japanese
 from spacy.lang.zh import Chinese
 from tokenizers import Tokenizer
-
-from xTTS.tts.layers.xtts.zh_num2words import TextNorm as zh_num2words
 
 
 def get_spacy_lang(lang):
@@ -521,6 +516,7 @@ def _expand_number(m, lang="en"):
 
 def expand_numbers_multilingual(text, lang="en"):
     if lang == "zh":
+        from xTTS.tts.layers.xtts.zh_num2words import TextNorm as zh_num2words
         text = zh_num2words()(text)
     else:
         if lang in ["en", "ru"]:
@@ -570,6 +566,7 @@ def basic_cleaners(text):
 
 
 def chinese_transliterate(text):
+    import pypinyin
     return "".join(
         [p[0] for p in pypinyin.pinyin(text, style=pypinyin.Style.TONE3, heteronym=False, neutral_tone_with_five=True)]
     )
@@ -582,6 +579,8 @@ def japanese_cleaners(text, katsu):
 
 
 def korean_transliterate(text):
+    from hangul_romanize import Transliter
+    from hangul_romanize.rule import academic
     r = Transliter(academic)
     return r.translit(text)
 
