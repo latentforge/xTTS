@@ -74,7 +74,7 @@ setup(
     # ext_modules=find_cython_extensions(),
     # package
     include_package_data=True,
-    packages=find_packages(include=["xTTS"], exclude=["*.tests", "*tests.*", "tests.*", "*tests", "tests"]),
+    packages=find_packages(include=["xTTS*"], exclude=["*.tests", "*tests.*", "tests.*", "*tests", "tests"]),
     package_data={
         "xTTS": [
             "VERSION",
