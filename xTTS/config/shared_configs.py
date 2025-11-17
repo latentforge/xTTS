@@ -242,3 +242,7 @@ class BaseDatasetConfig(Coqpit):
         check_argument("meta_file_train", c, restricted=True)
         check_argument("meta_file_val", c, restricted=False)
         check_argument("meta_file_attn_mask", c, restricted=False)
+
+
+class BaseTrainingConfig:
+    pass

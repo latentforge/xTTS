@@ -8,9 +8,7 @@ import torch
 from torch import nn
 
 from xTTS.config import load_config
-from xTTS.tts.configs.vits_config import VitsConfig
 from xTTS.tts.models import setup_model as setup_tts_model
-from xTTS.tts.models.vits import Vits
 
 from xTTS.tts.utils.synthesis import synthesis, transfer_voice, trim_silence
 from xTTS.utils.audio import AudioProcessor
@@ -100,12 +98,8 @@ class Synthesizer(nn.Module):
             self.output_sample_rate = self.vc_config.audio["output_sample_rate"]
 
         if model_dir:
-            if "fairseq" in model_dir:
-                self._load_fairseq_from_dir(model_dir, use_cuda)
-                self.output_sample_rate = self.tts_config.audio["sample_rate"]
-            else:
-                self._load_tts_from_dir(model_dir, use_cuda)
-                self.output_sample_rate = self.tts_config.audio["output_sample_rate"]
+            self._load_tts_from_dir(model_dir, use_cuda)
+            self.output_sample_rate = self.tts_config.audio["output_sample_rate"]
 
     @staticmethod
     def _get_segmenter(lang: str):
@@ -138,18 +132,6 @@ class Synthesizer(nn.Module):
         self.vc_model.load_checkpoint(self.vc_config, vc_checkpoint)
         if use_cuda:
             self.vc_model.cuda()
-
-    def _load_fairseq_from_dir(self, model_dir: str, use_cuda: bool) -> None:
-        """Load the fairseq model from a directory.
-
-        We assume it is VITS and the model knows how to load itself from the directory and there is a config.json file in the directory.
-        """
-        self.tts_config = VitsConfig()
-        self.tts_model = Vits.init_from_config(self.tts_config)
-        self.tts_model.load_fairseq_checkpoint(self.tts_config, checkpoint_dir=model_dir, eval=True)
-        self.tts_config = self.tts_model.config
-        if use_cuda:
-            self.tts_model.cuda()
 
     def _load_tts_from_dir(self, model_dir: str, use_cuda: bool) -> None:
         """Load the TTS model from a directory.
