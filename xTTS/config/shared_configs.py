@@ -244,5 +244,6 @@ class BaseDatasetConfig(Coqpit):
         check_argument("meta_file_attn_mask", c, restricted=False)
 
 
-class BaseTrainingConfig:
+@dataclass
+class BaseTrainingConfig(Coqpit):
     pass
