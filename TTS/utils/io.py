@@ -1,3 +1,13 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# MODIFICATIONS:
+# - Modified by b-re-w/LatentForge on 11/17/2025
+# - Changed torch.load() calls to explicitly set weight_only=False parameter
+#   to maintain compatibility with newer PyTorch versions that changed the default behavior
+# - Modified functions: load_checkpoint()
+
 import os
 import pickle as pickle_tts
 from typing import Any, Callable, Dict, Union
@@ -55,13 +65,13 @@ def load_fsspec(
 
 
 def load_checkpoint(
-    model, checkpoint_path, use_cuda=False, eval=False, cache=False
+    model, checkpoint_path, use_cuda=False, eval=False, cache=False, weights_only=False
 ):  # pylint: disable=redefined-builtin
     try:
-        state = load_fsspec(checkpoint_path, map_location=torch.device("cpu"), cache=cache)
+        state = load_fsspec(checkpoint_path, map_location=torch.device("cpu"), cache=cache, weights_only=weights_only)
     except ModuleNotFoundError:
         pickle_tts.Unpickler = RenamingUnpickler
-        state = load_fsspec(checkpoint_path, map_location=torch.device("cpu"), pickle_module=pickle_tts, cache=cache)
+        state = load_fsspec(checkpoint_path, map_location=torch.device("cpu"), pickle_module=pickle_tts, cache=cache, weights_only=weights_only)
     model.load_state_dict(state["model"])
     if use_cuda:
         model.cuda()
