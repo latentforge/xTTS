@@ -1,20 +1,46 @@
 [build-system]
-requires = [
-    "setuptools",
-    "wheel",
-    "cython~=0.29.30",
-    "numpy>=1.22.0",
-    "packaging",
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "xTTS"
+dynamic = ["version"]
+description = "Deep learning for Text to Speech by Coqui."
+readme = "README.md"
+license = {text = "MPL-2.0"}
+authors = [
+    {name = "Eren Gölge", email = "egolge@coqui.ai"}
+]
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX :: Linux",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Multimedia :: Sound/Audio",
+    "Topic :: Multimedia",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
-[flake8]
-max-line-length=120
+[project.urls]
+Documentation = "https://github.com/coqui-ai/TTS/wiki"
+Repository = "https://github.com/coqui-ai/TTS"
+Issues = "https://github.com/coqui-ai/TTS/issues"
+Discussions = "https://github.com/coqui-ai/TTS/discussions"
 
-[tool.black]
-line-length = 120
-target-version = ['py39']
+[tool.hatch.version]
+path = "xTTS/VERSION"
+pattern = "(?P<version>.+)"
 
-[tool.isort]
-line_length = 120
-profile = "black"
-multi_line_output = 3
+[tool.hatch.build.targets.wheel]
+packages = ["xTTS"]
