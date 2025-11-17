@@ -8,7 +8,6 @@ from coqpit import Coqpit
 from torch import nn
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import WeightedRandomSampler
-from trainer.torch import DistributedSampler, DistributedSamplerWrapper
 
 from xTTS.model import BaseTrainerModel
 from xTTS.tts.datasets.dataset import TTSDataset
@@ -271,8 +270,10 @@ class BaseTTS(BaseTrainerModel):
 
         # sampler for DDP
         if sampler is None:
+            from trainer.torch import DistributedSampler
             sampler = DistributedSampler(dataset) if num_gpus > 1 else None
         else:  # If a sampler is already defined use this sampler and DDP sampler together
+            from trainer.torch import DistributedSamplerWrapper
             sampler = DistributedSamplerWrapper(sampler) if num_gpus > 1 else sampler
 
         return sampler
