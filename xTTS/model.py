@@ -3,7 +3,13 @@ from typing import Dict
 
 import torch
 from coqpit import Coqpit
-from trainer import TrainerModel
+try:
+    from trainer import TrainerModel
+except ImportError:
+    import sys
+    print("Warning: trainer package not found. Using a dummy TrainerModel class.", file=sys.stderr)
+    class TrainerModel:
+        pass
 
 # pylint: skip-file
 
