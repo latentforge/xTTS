@@ -11,7 +11,6 @@ import torch
 import torch.distributed as dist
 from torch import nn
 from transformers import (
-    BeamSearchScorer,
     ConstrainedBeamSearchScorer,
     DisjunctiveConstraint,
     GenerationConfig,
@@ -440,6 +439,7 @@ class NewGenerationMixin(GenerationMixin):
                 raise ValueError("`max_length` needs to be a stopping_criteria for now.")
 
             # 11. prepare beam search scorer
+            from transformers.generation.beam_search import BeamSearchScorer
             beam_scorer = BeamSearchScorer(
                 batch_size=batch_size,
                 num_beams=generation_config.num_beams,
@@ -476,6 +476,7 @@ class NewGenerationMixin(GenerationMixin):
             if stopping_criteria.max_length is None:
                 raise ValueError("`max_length` needs to be a stopping_criteria for now.")
             # 12. prepare beam search scorer
+            from transformers.generation.beam_search import BeamSearchScorer
             beam_scorer = BeamSearchScorer(
                 batch_size=batch_size * generation_config.num_return_sequences,
                 num_beams=generation_config.num_beams,
