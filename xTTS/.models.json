@@ -5,11 +5,11 @@
                 "xtts_v2": {
                     "description": "XTTS-v2.0.3 by Coqui with 17 languages.",
                     "hf_url": [
-                        "https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/main/model.pth",
-                        "https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/main/config.json",
-                        "https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/main/vocab.json",
-                        "https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/main/hash.md5",
-                        "https://coqui.gateway.scarf.sh/hf-coqui/XTTS-v2/main/speakers_xtts.pth"
+                        "https://huggingface.co/coqui/XTTS-v2/resolve/main/model.pth",
+                        "https://huggingface.co/coqui/XTTS-v2/resolve/main/config.json",
+                        "https://huggingface.co/coqui/XTTS-v2/resolve/main/vocab.json",
+                        "https://huggingface.co/coqui/XTTS-v2/resolve/main/hash.md5",
+                        "https://huggingface.co/coqui/XTTS-v2/resolve/main/speakers_xtts.pth"
                     ],
                     "model_hash": "10f92b55c512af7a8d39d650547a15a7",
                     "default_vocoder": null,
